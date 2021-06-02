@@ -56,7 +56,7 @@ section.sign {
 form {
   background: url('https://p0.pikist.com/photos/744/884/knife-food-wood-table-wooden-background-meal-cooking-healthy.jpg');
   background-size: cover;
-  width: 568px;
+  width: 650px;
   margin: 0 auto;
   padding: 2rem;
   border-radius: 0.5rem;
@@ -78,7 +78,7 @@ div.buttons-right {
 button {
   border: none;
   border-radius: 0.25rem;
-  width: 8rem;
+  width: 7rem;
   height: 4rem;
   cursor: pointer;
 }
