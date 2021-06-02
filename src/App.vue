@@ -8,11 +8,12 @@
       /></router-link>
 
       <div>
-        <router-link to="/favourites" alt="Favourites">&#10084;</router-link>
+        <router-link to="/favourites" alt="Favourites" v-if="isLoggedIn">&#10084;</router-link>
         <router-link to="/">Home</router-link>
-        <router-link to="/add">Add recipe</router-link>
-        <router-link to="/register">Sign-up</router-link>
-        <router-link to="/login">Log-in</router-link>
+        <router-link to="/add" v-if="isLoggedIn">Add recipe</router-link>
+        <router-link to="/register" v-if="!isLoggedIn">Sign-up</router-link>
+        <router-link to="/login" v-if="!isLoggedIn">Log-in</router-link>
+        <button class="sign-out" v-else v-on:click="logout">Sign out</button>
       </div>
     </nav>
   </div>
@@ -25,10 +26,34 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-export default {};
+export default {
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  beforeMount() {
+    this.checkLoggedIn();
+  },
+  beforeUpdate() {
+    this.checkLoggedIn();
+  },
+  methods: {
+    checkLoggedIn() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) this.isLoggedIn = true;
+        else this.isLoggedIn = false;
+      });
+    },
+    logout() {
+      firebase.auth().signOut();
+      this.$router.push('/');
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -69,6 +94,21 @@ nav div a {
 }
 
 nav div a:hover {
+  background: #f87d7f;
+  color: white;
+  transition: 0.5s;
+}
+
+button.sign-out {
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  height: 2.5rem;
+  width: 8rem;
+}
+
+button.sign-out:hover {
   background: #f87d7f;
   color: white;
   transition: 0.5s;

@@ -1,8 +1,8 @@
 <template>
   <section class="sign">
     <div class="down">
-      <form v-on:submit.prevent="register">
-        <h1>Sign-up</h1>
+      <form v-on:submit.prevent="login">
+        <h1>Log-in</h1>
         <label class="label">Email</label>
         <div class="control">
           <input type="email" v-model="email" placeholder="Enter your email" />
@@ -14,7 +14,7 @@
         </div>
 
         <div class="control buttons-right">
-          <button type="submit">Sign-up</button>
+          <button type="submit">Log-in</button>
         </div>
       </form>
     </div>
@@ -26,7 +26,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 export default {
-  name: 'Register',
+  name: 'Login',
   data() {
     return {
       email: '',
@@ -34,12 +34,12 @@ export default {
     };
   },
   methods: {
-    register() {
+    login() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+        .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          alert('reg');
+          alert('logged in');
           this.$router.push('/');
         })
         .catch((e) => alert(e.message));
