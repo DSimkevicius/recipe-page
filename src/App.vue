@@ -1,19 +1,27 @@
 <template>
-  <nav class="wrapper">
-    <router-link to="/"
-      ><img
-        src="https://i.pinimg.com/originals/8d/c5/31/8dc531fd1168a51c9e5bc9aca0d45051.jpg"
-        alt="logo"
-    /></router-link>
+  <div class="nav-borders">
+    <nav class="wrapper">
+      <router-link to="/"
+        ><img
+          src="https://i.pinimg.com/originals/8d/c5/31/8dc531fd1168a51c9e5bc9aca0d45051.jpg"
+          alt="logo"
+      /></router-link>
 
-    <div>
-      <router-link to="/favourites" alt="Favourites">&#10084;</router-link>
-      <router-link to="/">Home</router-link>
-      <router-link to="/add">Add recipe</router-link>
-      <router-link to="/register">Sign-up</router-link>
-      <router-link to="/login">Log-in</router-link>
+      <div>
+        <router-link to="/favourites" alt="Favourites">&#10084;</router-link>
+        <router-link to="/">Home</router-link>
+        <router-link to="/add">Add recipe</router-link>
+        <router-link to="/register">Sign-up</router-link>
+        <router-link to="/login">Log-in</router-link>
+      </div>
+    </nav>
+  </div>
+
+  <div class="column">
+    <div class="columns">
+      <router-view />
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -24,6 +32,13 @@ export default {};
 </script>
 
 <style scoped>
+.column {
+  background: #f1f2f2;
+  height: calc(100vh - 12vh - 2px);
+}
+.nav-borders {
+  border: 1px solid black;
+}
 .wrapper {
   margin: 0 auto;
   width: 1024px;
@@ -37,6 +52,7 @@ nav {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  height: 12vh;
 }
 
 nav div a:first-child {
