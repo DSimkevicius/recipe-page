@@ -22,9 +22,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 export default {
   name: 'Register',
   data() {
@@ -35,12 +32,21 @@ export default {
   },
   methods: {
     register() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          alert('reg');
-          this.$router.push('/');
+      fetch('http://localhost:3000/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.email,
+          password: this.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem('token', data.token);
+          this.$router.push('/login');
         })
         .catch((e) => alert(e.message));
     },

@@ -29,9 +29,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
 export default {
   data() {
     return {
@@ -42,15 +39,25 @@ export default {
   },
   methods: {
     add() {
-      firebase
-        .firestore()
-        .collection('recipes')
-        .add({
+      fetch('http://localhost:3000/recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           image: this.image,
           title: this.title,
           description: this.description,
+          owner_id: localStorage.getItem('token'),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          alert('Succesfully added recipe');
+          this.$router.push('/');
         })
-        .then(() => alert('Successfully added recipe'));
+        .catch((e) => alert(e.message));
     },
   },
 };

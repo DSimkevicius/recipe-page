@@ -10,10 +10,10 @@
       <div>
         <router-link to="/favourites" alt="Favourites" v-if="isLoggedIn">&#10084;</router-link>
         <router-link to="/">Home</router-link>
-        <router-link to="/add" v-if="isLoggedIn">Add recipe</router-link>
-        <router-link to="/register" v-if="!isLoggedIn">Sign-up</router-link>
-        <router-link to="/login" v-if="!isLoggedIn">Log-in</router-link>
-        <button class="sign-out" v-else v-on:click="logout">Sign out</button>
+        <router-link to="/add">Add recipe</router-link>
+        <router-link to="/register">Sign-up</router-link>
+        <router-link to="/login">Log-in</router-link>
+        <button class="sign-out" v-on:click="logout">Sign out</button>
       </div>
     </nav>
   </div>
@@ -43,7 +43,8 @@ export default {
       });
     },
     logout() {
-      firebase.auth().signOut();
+      localStorage.removeItem('token');
+
       this.$router.push('/');
     },
   },
@@ -102,5 +103,15 @@ button.sign-out:hover {
   background: #f87d7f;
   color: white;
   transition: 0.5s;
+}
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    margin: 0 auto;
+    width: 512px;
+  }
+  nav {
+    display: flex;
+    height: 12vh;
+  }
 }
 </style>
