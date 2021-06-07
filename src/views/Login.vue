@@ -22,9 +22,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 export default {
   name: 'Login',
   data() {
@@ -35,11 +32,20 @@ export default {
   },
   methods: {
     login() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          alert('logged in');
+      fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.email,
+          password: this.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem('token', data.token);
           this.$router.push('/');
         })
         .catch((e) => alert(e.message));
@@ -56,7 +62,7 @@ section.sign {
 form {
   background: url('https://p0.pikist.com/photos/744/884/knife-food-wood-table-wooden-background-meal-cooking-healthy.jpg');
   background-size: cover;
-  width: 568px;
+  width: 650px;
   margin: 0 auto;
   padding: 2rem;
   border-radius: 0.5rem;
@@ -78,7 +84,7 @@ div.buttons-right {
 button {
   border: none;
   border-radius: 0.25rem;
-  width: 8rem;
+  width: 7rem;
   height: 4rem;
   cursor: pointer;
 }

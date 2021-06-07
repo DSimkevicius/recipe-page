@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import Home from '../views/Home.vue';
 
 const routes = [
@@ -10,9 +8,12 @@ const routes = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/add',
+    name: 'Add',
+    component: () => import(/* webpackChunkName: "add" */ '../views/Add.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/register',
@@ -32,13 +33,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (!user && to.meta.requiresAuth) {
-      next('/');
-    } else {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+    if (token) {
       next();
+    } else {
+      alert('You need to log-in to use this function');
+      router.replace('/');
     }
-  });
+  } else {
+    next();
+  }
 });
 
 export default router;
