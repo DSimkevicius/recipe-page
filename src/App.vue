@@ -19,6 +19,6 @@ export default {
 <style scoped>
 .column {
   background: #f1f2f2;
-  height: calc(100vh - 12vh - 2px);
+  height: 100%;
 }
 </style>

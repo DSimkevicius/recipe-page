@@ -48,7 +48,6 @@ export default {
           image: this.image,
           title: this.title,
           description: this.description,
-          owner_id: localStorage.getItem('token'),
         }),
       })
         .then((res) => res.json())
@@ -65,13 +64,13 @@ export default {
 
 <style scoped>
 .add {
-  padding-top: 2.5rem;
+  padding-top: 5em;
 }
 
 form {
   width: 650px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem;
 }
 
 div.control input {
